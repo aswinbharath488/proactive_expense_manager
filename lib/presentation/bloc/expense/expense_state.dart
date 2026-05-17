@@ -24,7 +24,7 @@ class ExpenseState extends Equatable {
         totalIncome = 0,
         totalExpense = 0,
         monthlyDebit = 0,
-        monthlyLimit = 10000,
+        monthlyLimit = 1000,
         recent = const [],
         all = const [],
         categories = const [],

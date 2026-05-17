@@ -44,14 +44,23 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.surface,
+        backgroundColor: Colors.black,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 32),
+                const SizedBox(height: 24),
+                Center(
+                  child: Image.asset(
+                    'assets/images/Logo.png',
+                    width: 72,
+                    height: 72,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                const SizedBox(height: 28),
                 Text(
                   'Get Started',
                   style: Theme.of(context).textTheme.headlineLarge,
@@ -100,9 +109,26 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
                   builder: (context, state) {
                     final loading = state is AuthLoading;
                     return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryIndigo,
+                      ),
                       onPressed: loading
                           ? null
                           : () {
+                              final digits = _phone.text.replaceAll(
+                                RegExp(r'\D'),
+                                '',
+                              );
+                              if (digits.length != 10) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Enter a valid 10-digit phone number',
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
                               context.read<AuthBloc>().add(
                                     AuthSendOtp(_phone.text),
                                   );

@@ -41,9 +41,9 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
     return Padding(
       padding: EdgeInsets.only(bottom: bottom),
       child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        decoration: const BoxDecoration(
+          color: Color(0xFF121212),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         ),
         child: SafeArea(
           top: false,
@@ -55,6 +55,17 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    Center(
+                      child: Container(
+                        width: 40,
+                        height: 4,
+                        margin: const EdgeInsets.only(bottom: 12),
+                        decoration: BoxDecoration(
+                          color: AppColors.border,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                    ),
                     Row(
                       children: [
                         const Expanded(
@@ -74,33 +85,9 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColors.border),
-                        color: const Color(0xFF1A1A1A),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: _ToggleChip(
-                              label: 'Expense',
-                              selected: _expense,
-                              selectedColor: AppColors.incomeGreen,
-                              onTap: () => setState(() => _expense = true),
-                            ),
-                          ),
-                          Expanded(
-                            child: _ToggleChip(
-                              label: 'Income',
-                              selected: !_expense,
-                              selectedColor: AppColors.inputFill,
-                              onTap: () => setState(() => _expense = false),
-                            ),
-                          ),
-                        ],
-                      ),
+                    _ExpenseIncomeToggle(
+                      isExpense: _expense,
+                      onChanged: (expense) => setState(() => _expense = expense),
                     ),
                     const SizedBox(height: 16),
                     TextField(
@@ -227,33 +214,83 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
   }
 }
 
-class _ToggleChip extends StatelessWidget {
-  const _ToggleChip({
+/// Figma: Expense (red) | Income (green).
+class _ExpenseIncomeToggle extends StatelessWidget {
+  const _ExpenseIncomeToggle({
+    required this.isExpense,
+    required this.onChanged,
+  });
+
+  final bool isExpense;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 48,
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: const Color(0xFF1A1A1A),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: _SegmentTab(
+              label: 'Expense',
+              selected: isExpense,
+              activeColor: AppColors.expenseRed,
+              onTap: () => onChanged(true),
+            ),
+          ),
+          Expanded(
+            child: _SegmentTab(
+              label: 'Income',
+              selected: !isExpense,
+              activeColor: AppColors.incomeGreen,
+              onTap: () => onChanged(false),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SegmentTab extends StatelessWidget {
+  const _SegmentTab({
     required this.label,
     required this.selected,
-    required this.selectedColor,
+    required this.activeColor,
     required this.onTap,
   });
 
   final String label;
   final bool selected;
-  final Color selectedColor;
+  final Color activeColor;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? selectedColor : Colors.transparent,
-      borderRadius: BorderRadius.circular(10),
+      color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(10),
         onTap: onTap,
-        child: Center(
+        borderRadius: BorderRadius.circular(8),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOutCubic,
+          decoration: BoxDecoration(
+            color: selected ? activeColor : Colors.transparent,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          alignment: Alignment.center,
           child: Text(
             label,
             style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
+              color: selected ? Colors.white : AppColors.textSecondary,
+              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
               fontSize: 15,
             ),
           ),

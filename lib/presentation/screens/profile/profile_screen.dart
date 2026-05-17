@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/constants/app_assets.dart';
 import '../../../core/services/preferences_service.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../widgets/asset_icon.dart';
 import '../../../core/utils/formatters.dart';
 import '../../../data/repositories/auth_repository.dart';
 import '../../bloc/auth/auth_bloc.dart';
@@ -112,7 +114,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const SnackBar(content: Text('Nickname saved')),
                         );
                       },
-                      icon: const Icon(Icons.edit, color: Colors.white),
+                      icon: const AssetIcon(
+                        asset: AppAssets.iconEdit,
+                        width: 22,
+                        height: 22,
+                        color: Colors.white,
+                        fallback: Icons.edit_outlined,
+                      ),
                     ),
                   ],
                 ),
@@ -297,11 +305,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ],
                           ),
                         ),
-                        Icon(
-                          Icons.cloud_upload_outlined,
-                          color: Colors.white.withValues(alpha: 0.9),
-                          size: 32,
-                        ),
+                        state.syncing
+                            ? const SizedBox(
+                                width: 32,
+                                height: 32,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.5,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : AssetIcon(
+                                asset: AppAssets.iconCloudSync,
+                                width: 32,
+                                height: 32,
+                                color: Colors.white.withValues(alpha: 0.9),
+                                fallback: Icons.cloud_upload_outlined,
+                              ),
                       ],
                     ),
                   ),

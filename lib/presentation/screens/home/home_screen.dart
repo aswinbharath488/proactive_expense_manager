@@ -9,7 +9,9 @@ import '../../widgets/transaction_tile.dart';
 import '../../bloc/expense/expense_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.onSeeAllTransactions});
+
+  final VoidCallback? onSeeAllTransactions;
 
   @override
   Widget build(BuildContext context) {
@@ -81,16 +83,36 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(20, 8, 20, 8),
-                    child: Text(
-                      'Recent Transactions',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                    child: Row(
+                      children: [
+                        const Expanded(
+                          child: Text(
+                            'Recent Transactions',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        if (onSeeAllTransactions != null)
+                          TextButton(
+                            onPressed: onSeeAllTransactions,
+                            style: TextButton.styleFrom(
+                              foregroundColor: AppColors.primaryBlue,
+                              padding: EdgeInsets.zero,
+                              minimumSize: Size.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            child: const Text(
+                              'See All',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                 ),

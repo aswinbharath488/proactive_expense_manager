@@ -49,7 +49,7 @@ class PreferencesService {
   }
 
   double get monthlyExpenseLimit =>
-      _prefs.getDouble(PrefsKeys.monthlyExpenseLimit) ?? 10000;
+      _prefs.getDouble(PrefsKeys.monthlyExpenseLimit) ?? 1000;
 
   Future<void> setMonthlyExpenseLimit(double v) =>
       _prefs.setDouble(PrefsKeys.monthlyExpenseLimit, v);

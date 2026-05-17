@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../core/constants/app_assets.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/formatters.dart';
 import '../../data/models/transaction_with_category.dart';
+import 'asset_icon.dart';
 
 class TransactionTile extends StatelessWidget {
   const TransactionTile({
@@ -14,7 +16,21 @@ class TransactionTile extends StatelessWidget {
   final TransactionWithCategory row;
   final VoidCallback onDelete;
 
-  IconData _iconForCategory(String name) {
+  String _categoryAsset(String name) {
+    final n = name.toLowerCase();
+    if (n.contains('bill') || n.contains('water') || n.contains('electric')) {
+      return AppAssets.categoryBills;
+    }
+    if (n.contains('food') ||
+        n.contains('grocery') ||
+        n.contains('shop') ||
+        n.contains('transport')) {
+      return AppAssets.categoryShopping;
+    }
+    return AppAssets.categoryShopping;
+  }
+
+  IconData _categoryFallback(String name) {
     final n = name.toLowerCase();
     if (n.contains('bill') || n.contains('water') || n.contains('electric')) {
       return Icons.opacity;
@@ -46,7 +62,15 @@ class TransactionTile extends StatelessWidget {
               color: const Color(0xFF252525),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(_iconForCategory(row.categoryName), color: Colors.white),
+            child: Center(
+              child: AssetIcon(
+                asset: _categoryAsset(row.categoryName),
+                width: 22,
+                height: 22,
+                color: Colors.white,
+                fallback: _categoryFallback(row.categoryName),
+              ),
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -94,7 +118,11 @@ class TransactionTile extends StatelessWidget {
           ),
           IconButton(
             onPressed: onDelete,
-            icon: const Icon(Icons.delete_outline, color: AppColors.expenseRed),
+            icon: const Icon(
+              Icons.delete_outline,
+              color: AppColors.expenseRed,
+              size: 22,
+            ),
           ),
         ],
       ),

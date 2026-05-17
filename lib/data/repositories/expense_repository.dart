@@ -1,5 +1,6 @@
 import 'package:uuid/uuid.dart';
 
+import '../../core/constants/api_constants.dart';
 import '../../core/services/notification_service.dart';
 import '../../core/services/preferences_service.dart';
 import '../api/api_client.dart';
@@ -138,7 +139,7 @@ class ExpenseRepository {
     if (delTx.isNotEmpty) {
       final ids = delTx.map((e) => e.id).toList();
       final res = await _api.deleteJson(
-        '/transactions/delete/',
+        ApiConstants.transactionsDelete,
         body: {'ids': ids},
       );
       final deleted =
@@ -153,7 +154,7 @@ class ExpenseRepository {
     if (delCat.isNotEmpty) {
       final ids = delCat.map((e) => e.id).toList();
       final res = await _api.deleteJson(
-        '/categories/delete/',
+        ApiConstants.categoriesDelete,
         body: {'ids': ids},
       );
       final deleted =
@@ -169,7 +170,7 @@ class ExpenseRepository {
     final list = await _db.getCategoriesUnsyncedNonDeleted();
     for (final c in list) {
       final res = await _api.postJson(
-        '/categories/add/',
+        ApiConstants.categoriesAdd,
         body: {'category_id': c.id, 'name': c.name},
       );
       final synced = (res['synced_ids'] as List?)
@@ -200,7 +201,7 @@ class ExpenseRepository {
         .toList();
 
     final res = await _api.postJson(
-      '/transactions/add/',
+      ApiConstants.transactionsAdd,
       body: {'transactions': payload},
     );
     final synced =
