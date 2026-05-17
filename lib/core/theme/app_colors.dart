@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Design tokens aligned with Figma / screenshots (dark theme).
+/// App colors (dark theme).
 abstract final class AppColors {
   static const Color scaffoldBg = Color(0xFF000000);
   static const Color surface = Color(0xFF121212);

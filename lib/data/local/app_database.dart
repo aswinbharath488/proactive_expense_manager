@@ -133,7 +133,7 @@ CREATE TABLE transactions (
     );
   }
 
-  /// JOIN query required by skill test: category name for each transaction row.
+  /// Recent transactions with category name (JOIN).
   Future<List<TransactionWithCategory>> getTransactionsWithCategory({
     int? limit,
     bool activeOnly = true,

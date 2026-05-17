@@ -1,4 +1,4 @@
-/// Figma SVG assets under [assets/icons/].
+/// Asset paths for icons and logo.
 abstract final class AppAssets {
   static const String _icons = 'assets/icons';
 

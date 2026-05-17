@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-/// Figma SVG asset with optional [fallback] Material icon.
+/// SVG/PNG from assets; uses [fallback] icon if load fails.
 class AssetIcon extends StatelessWidget {
   const AssetIcon({
     super.key,

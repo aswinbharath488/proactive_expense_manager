@@ -18,7 +18,7 @@ class MainShell extends StatefulWidget {
 }
 
 class _MainShellState extends State<MainShell> {
-  /// Figma tabs: `0` = Home, `2` = Profile (center button is sync).
+  // 0 = home, 2 = profile; center button opens sync.
   int _index = 0;
   bool _booted = false;
 

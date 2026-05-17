@@ -4,7 +4,7 @@ import '../../core/constants/app_assets.dart';
 import '../../core/theme/app_colors.dart';
 import 'asset_icon.dart';
 
-/// Figma bottom bar: Home — Sync (center) — Profile.
+/// Bottom bar: home, sync (center), profile.
 class AppBottomNav extends StatelessWidget {
   const AppBottomNav({
     super.key,

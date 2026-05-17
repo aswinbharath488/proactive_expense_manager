@@ -214,7 +214,7 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
   }
 }
 
-/// Figma: Expense (red) | Income (green).
+/// Expense / income segment toggle.
 class _ExpenseIncomeToggle extends StatelessWidget {
   const _ExpenseIncomeToggle({
     required this.isExpense,

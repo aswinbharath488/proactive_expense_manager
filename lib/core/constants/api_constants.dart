@@ -1,4 +1,4 @@
-/// Backend base URL from skill test specification.
+/// Backend API paths.
 class ApiConstants {
   ApiConstants._();
 
